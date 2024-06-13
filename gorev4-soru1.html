@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sıralama</title>
+  </head>
+  <body>
+    <p></p>
+    <p id="sira"></p>
+    <br />
+    <button id="siralama" onclick="sirala()">SIRALA</button>
+    <button id="rastgele" onclick="rastgele()">Rastgele Sayı Seç</button>
+
+    <script>
+      window.onload = function () {
+        document.getElementById("rastgele").disabled = true;
+        var metin = document.querySelector("p");
+        sayilar(metin);
+      };
+
+      function sirala() {
+        var metin = document.querySelector("p");
+        metin.innerHTML = "";
+        document.getElementById("siralama").disabled = true;
+        document.getElementById("rastgele").disabled = false;
+        var sira = document.getElementById("sira");
+        sayilar(sira, true);
+      }
+
+      var rndSayilar = [];
+      function rastgele() {
+        var randomSayi;
+        do {
+          randomSayi = Math.floor(Math.random() * 99) + 1;
+        } while (rndSayilar.includes(randomSayi));
+
+        rndSayilar.push(randomSayi);
+
+        var spans = document.body.getElementsByTagName("span");
+
+        for (var i = 0; i < spans.length; i++) {
+          var spanSayi = parseInt(spans[i].textContent.trim());
+          if (spanSayi === randomSayi) {
+            spans[i].style.color = "red";
+            spans[i].style.fontWeight = "bold";
+          }
+        }
+      }
+
+      function sayilar(icerik, onarli) {
+        for (let sayi = 1; sayi < 100; sayi++) {
+          if (onarli && sayi % 10 == 1) {
+            icerik.appendChild(document.createElement("br"));
+          }
+          yazdir(icerik, sayi);
+        }
+      }
+      function yazdir(element, sayi) {
+        var span = document.createElement("span");
+        span.innerHTML += "<span>" + sayi + " " + "</span>";
+        element.appendChild(span);
+      }
+    </script>
+  </body>
+</html>
